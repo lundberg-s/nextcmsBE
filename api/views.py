@@ -11,11 +11,10 @@ from rest_framework.generics import (
     GenericAPIView,
 )
 
-# Create your views here.
-
 class PageListCreateView(ListCreateAPIView):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+
 
 class PageDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Page.objects.none()
@@ -25,16 +24,20 @@ class PageDetailView(RetrieveUpdateDestroyAPIView):
         page_id = self.kwargs.get('pk')
         return get_object_or_404(Page, id=page_id)
     
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        page = serializer.save()
-        return Response(PageSerializer(page).data)
+
+class PageBlockListView(ListAPIView):
+    queryset = Block.objects.none()
+    serializer_class = BlockSerializer
+
+    def get_queryset(self):
+        page_id = self.kwargs.get('pk')
+        return Block.objects.filter(pageId=page_id)
+
 
 class BlockListCreateView(ListCreateAPIView):
     queryset = Block.objects.all()
     serializer_class = BlockSerializer
+
 
 class BlockDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Block.objects.all()
