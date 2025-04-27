@@ -14,7 +14,7 @@ class Page(models.Model):
 class Block(models.Model):
     type = models.CharField(max_length=100)
     content = models.JSONField(default=dict)
-    settings = models.JSONField(default=dict)
+    config = models.JSONField(default=dict)
     pageId = models.ForeignKey(Page, on_delete=models.CASCADE)
     drag_index = models.FloatField(blank=True, null=True)
 

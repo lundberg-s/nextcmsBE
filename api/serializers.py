@@ -17,5 +17,5 @@ class PageSerializer(serializers.ModelSerializer):
 class BlockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Block
-        fields = ['id', 'type', 'content', 'settings', 'pageId', "drag_index"]
+        fields = ['id', 'type', 'content', 'config', 'pageId', "drag_index"]
 
