@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("api", "0005_alter_block_drag_index"),
+        ("cms", "0005_alter_block_drag_index"),
     ]
 
     operations = [

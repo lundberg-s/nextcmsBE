@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('api', '0001_initial'),
+        ('cms', '0001_initial'),
     ]
 
     operations = [
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('type', models.CharField(max_length=100)),
                 ('content', models.JSONField(default=dict)),
                 ('settings', models.JSONField(default=dict)),
-                ('pageId', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.page')),
+                ('pageId', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.page')),
             ],
         ),
     ]
