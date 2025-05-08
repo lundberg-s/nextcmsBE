@@ -5,7 +5,7 @@ repository_folder/
 ├── api/                    # Main Django project container
 │   ├── manage.py           # Django management CLI tool
 │
-│   ├── root/             # Project settings and configuration
+│   ├── root/               # Project settings and configuration
 │   │   ├── init.py
 │   │   ├── settings.py     # Django settings
 │   │   ├── urls.py         # Root URL routes
