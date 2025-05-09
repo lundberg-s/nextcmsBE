@@ -53,15 +53,15 @@ class BlockOrderUpdateTests(APITestCase):
 
     def setUp(self):
         self.page = Page.objects.create(title='Test Page', slug='test-page')
-        self.block1 = Block.objects.create(type='Test Block 1', content={}, settings={}, pageId=self.page, drag_index=1.0)
-        self.block2 = Block.objects.create(type='Test Block 2', content={}, settings={}, pageId=self.page, drag_index=2.0)
+        self.block1 = Block.objects.create(type='Test Block 1', content={}, settings={}, pageId=self.page, order=1.0)
+        self.block2 = Block.objects.create(type='Test Block 2', content={}, settings={}, pageId=self.page, order=2.0)
 
     def test_block_order_update(self):
         url = reverse('block-order-update')
         data = {
             "blocks": [
-                {"id": self.block1.id, "drag_index": 2.0},
-                {"id": self.block2.id, "drag_index": 1.0}
+                {"id": self.block1.id, "order": 2.0},
+                {"id": self.block2.id, "order": 1.0}
             ]
         }
         response = self.client.patch(url, data, format='json')

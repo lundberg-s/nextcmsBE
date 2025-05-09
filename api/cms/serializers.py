@@ -7,15 +7,14 @@ class PageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Page
-        fields = ['id', 'title', 'slug', 'blocks', 'last_update']
+        fields = ['id', 'title', 'slug', 'blocks']
 
     def get_blocks(self, obj):
-        # Fetch related blocks for the given page
-        blocks = Block.objects.filter(pageId=obj.id)
+        blocks = Block.objects.filter(page=obj.id)
         return BlockSerializer(blocks, many=True).data
 
 class BlockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Block
-        fields = ['id', 'type', 'content', 'config', 'pageId', "drag_index"]
+        fields = ['id', 'type', 'content', 'config', 'page', "order"]
 

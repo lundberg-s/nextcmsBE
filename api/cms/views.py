@@ -32,7 +32,7 @@ class BlockListByPageView(ListAPIView):
 
     def get_queryset(self):
         page_id = self.kwargs.get('pk')
-        return Block.objects.filter(pageId=page_id)
+        return Block.objects.filter(page=page_id)
 
 
 class BlockListCreateView(ListCreateAPIView):
@@ -40,8 +40,8 @@ class BlockListCreateView(ListCreateAPIView):
     serializer_class = BlockSerializer
 
     def perform_create(self, serializer):
-        last_index = Block.objects.aggregate(Max("drag_index"))["drag_index__max"]
-        serializer.save(drag_index=(last_index or 0) + 1)
+        last_index = Block.objects.aggregate(Max("order"))["order__max"]
+        serializer.save(order=(last_index or 0) + 1)
 
         super().perform_create(serializer)
         
@@ -65,7 +65,7 @@ class BlockOrderUpdateView(GenericAPIView):
 
         # Update blocks in bulk
         Block.objects.bulk_update(
-            [Block(id=block["id"], drag_index=block["drag_index"]) for block in request.data],
-            ["drag_index"]
+            [Block(id=block["id"], order=block["order"]) for block in request.data],
+            ["order"]
         )
         return Response({"message": "Blocks updated successfully."}, status=status.HTTP_200_OK)

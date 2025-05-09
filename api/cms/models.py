@@ -1,25 +1,32 @@
 from django.db import models
+from root.models import TimestampedModel
+import uuid
 
 
-class Page(models.Model):
+class Page(TimestampedModel):
+    id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True, db_index=True, primary_key=True
+    )
     title = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True, null=True)
     blocks = models.JSONField(default=list)
-    last_update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
 
 
-class Block(models.Model):
+class Block(TimestampedModel):
+    id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True, db_index=True, primary_key=True
+    )
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
     type = models.CharField(max_length=100)
+    order = models.FloatField(blank=True, null=True)
     content = models.JSONField(default=dict)
     config = models.JSONField(default=dict)
-    pageId = models.ForeignKey(Page, on_delete=models.CASCADE)
-    drag_index = models.FloatField(blank=True, null=True)
 
     class Meta:
-        ordering = ["drag_index"]
+        ordering = ["order"]
 
     def __str__(self):
         return self.type
