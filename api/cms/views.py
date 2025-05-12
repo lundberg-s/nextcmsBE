@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from .models import Page, Block
 from django.db.models import Max
 from .serializers import PageSerializer, BlockSerializer
+from root.permissions import ConditionalPermissionView
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
@@ -12,7 +13,7 @@ from rest_framework.generics import (
     GenericAPIView,
 )
 
-class PageListCreateView(ListCreateAPIView):
+class PageListCreateView(ListCreateAPIView, ConditionalPermissionView):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 

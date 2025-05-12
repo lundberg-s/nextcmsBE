@@ -17,18 +17,15 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
-from root.views import CustomTokenObtainPairView
+from .views import CookieTokenObtainPairView, CookieTokenRefreshView, LogoutView
+
+API_PREFIX = "api/"
 
 urlpatterns = [
-    path(
-        "auth/token/obtain/",
-        CustomTokenObtainPairView.as_view(),
-        name="token_obtain_pair",
-    ),
-    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("auth/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path("admin/", admin.site.urls),
-    path("user/", include("user.urls")),
-    path("cms/", include("cms.urls")),
+    path(f"{API_PREFIX}login/", CookieTokenObtainPairView.as_view(), name="login"),
+    path(f"{API_PREFIX}refresh/", CookieTokenRefreshView.as_view(), name="refresh_token"),
+    path(f"{API_PREFIX}logout/", LogoutView.as_view(), name="logout"),
+    path(f"{API_PREFIX}admin/", admin.site.urls),
+    path(f"{API_PREFIX}user/", include("user.urls")),
+    path(f"{API_PREFIX}cms/", include("cms.urls")),
 ]
