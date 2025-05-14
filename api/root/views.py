@@ -21,9 +21,9 @@ class CookieTokenObtainPairView(TokenObtainPairView):
         res.set_cookie(
             key="access_token",
             value=access_token,
-            httponly=False,
+            httponly=True,
             secure=True,
-            samesite="None",
+            samesite="Lax",
             max_age=300
         )
 
