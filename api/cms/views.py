@@ -17,15 +17,13 @@ class PageListCreateView(ListCreateAPIView, ConditionalPermissionView):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 
-
-class PageDetailView(RetrieveUpdateDestroyAPIView):
+class PageDetailView(RetrieveUpdateDestroyAPIView, ConditionalPermissionView):
     queryset = Page.objects.none()
     serializer_class = PageSerializer
 
     def get_object(self):
-        page_id = self.kwargs.get('pk')
-        return get_object_or_404(Page, id=page_id)
-    
+        page_slug = self.kwargs.get('slug')
+        return get_object_or_404(Page, slug=page_slug)
 
 class BlockListByPageView(ListAPIView):
     queryset = Block.objects.none()
@@ -63,8 +61,7 @@ class BlockOrderUpdateView(GenericAPIView):
     def patch(self, request, *args, **kwargs):
         if not isinstance(request.data, list):
             return Response({"error": "Expected a list of blocks."}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Update blocks in bulk
+            
         Block.objects.bulk_update(
             [Block(id=block["id"], order=block["order"]) for block in request.data],
             ["order"]

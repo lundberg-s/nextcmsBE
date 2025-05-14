@@ -12,7 +12,7 @@ from .views import (
 urlpatterns = [
     # Pages
     path("pages/", PageListCreateView.as_view(), name="page-list-create"),
-    path("pages/<uuid:pk>/", PageDetailView.as_view(), name="page-detail"),
+    path("pages/<slug:slug>/", PageDetailView.as_view(), name="page-detail"),
     path("blocks/", BlockListCreateView.as_view(), name="block-list-create"),
     
     
