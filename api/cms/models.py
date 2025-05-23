@@ -23,7 +23,7 @@ class Block(TimestampedModel):
     type = models.CharField(max_length=100)
     order = models.FloatField(blank=True, null=True)
     content = models.JSONField(default=dict)
-    config = models.JSONField(default=dict)
+    style = models.JSONField(default=dict)
 
     class Meta:
         ordering = ["order"]
