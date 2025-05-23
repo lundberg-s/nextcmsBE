@@ -16,8 +16,16 @@ from rest_framework.generics import (
 class PageListCreateView(ListCreateAPIView, ConditionalPermissionView):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
-
+    
 class PageDetailView(RetrieveUpdateDestroyAPIView, ConditionalPermissionView):
+    queryset = Page.objects.none()
+    serializer_class = PageSerializer
+
+    def get_object(self):
+        page_id = self.kwargs.get('pk')
+        return get_object_or_404(Page, id=page_id)
+    
+class PagePublicDetailView(RetrieveUpdateDestroyAPIView, ConditionalPermissionView):
     queryset = Page.objects.none()
     serializer_class = PageSerializer
 

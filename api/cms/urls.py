@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     PageListCreateView,
+    PagePublicDetailView,
     PageDetailView,
     BlockListByPageView,
     BlockListCreateView,
@@ -12,7 +13,8 @@ from .views import (
 urlpatterns = [
     # Pages
     path("pages/", PageListCreateView.as_view(), name="page-list-create"),
-    path("pages/<slug:slug>/", PageDetailView.as_view(), name="page-detail"),
+    path("pages/slug/<slug:slug>/", PagePublicDetailView.as_view(), name="page-detail-slug"),
+    path("pages/<uuid:pk>/", PageDetailView.as_view(), name="page-detail"),
     path("blocks/", BlockListCreateView.as_view(), name="block-list-create"),
     
     
